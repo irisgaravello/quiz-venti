@@ -1,416 +1,400 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="it">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quale vento ti rappresenta?</title>
+  <style>
+    :root{
+      --bg:#f7fbff;
+      --card:#fff;
+      --accent:#7fc7ff;
+      --muted:#506b73;
+      --text:#0f3a3f;
+      --radius:12px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+    }
+    .container{
+      width:100%;
+      max-width:820px;
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:0 10px 30px rgba(16,49,58,0.06);
+    }
+    .header{text-align:center;margin-bottom:8px}
+    .title{font-size:22px;font-weight:700;margin:0}
+    .subtitle{margin-top:6px;color:var(--muted);font-size:14px}
+    .question{border-radius:10px;padding:14px;margin:14px 0;background:#fbfeff;border:1px solid rgba(13,76,102,0.03)}
+    .qtext{font-weight:600;margin-bottom:10px}
+    .options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .opt{
+      padding:10px;border-radius:10px;border:1px solid transparent;background:transparent;text-align:left;cursor:pointer;transition:all .16s ease;font-size:14px;
+    }
+    .opt:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(13,76,102,0.06)}
+    .opt input{margin-right:8px}
+    .footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+    .btn{
+      background:var(--accent);
+      color:white;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700;
+    }
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .counters{font-size:13px;color:var(--muted)}
+    /* Result card */
+    .result{max-width:720px;margin:0 auto;padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.9));box-shadow:0 8px 30px rgba(16,49,58,0.06);text-align:center;animation:fadeIn .45s ease}
+    .result-emoji{font-size:48px;margin-bottom:8px}
+    .result-name{font-size:20px;font-weight:700;margin-bottom:6px}
+    .result-desc{color:#2e646c;margin-bottom:12px}
+    .share{margin-top:10px;display:flex;gap:8px;justify-content:center}
+    .small{font-size:13px;color:var(--muted)}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    /* responsive */
+    @media (max-width:640px){ .options{grid-template-columns:1fr} .title{font-size:18px} }
   </style>
 </head>
 <body>
-<p class="p1">&lt;!doctype html&gt;</p>
-<p class="p1">&lt;html lang="it"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="utf-8" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Quale vento ti rappresenta?&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>:root{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--bg:#f7fbff;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--card:#fff;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--accent:#7fc7ff;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--muted:#506b73;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--text:#0f3a3f;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>--radius:12px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>*{box-sizing:border-box}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin:0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background:var(--bg);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color:var(--text);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>-webkit-font-smoothing:antialiased;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>-moz-osx-font-smoothing:grayscale;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding:28px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display:flex;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>align-items:center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>justify-content:center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>min-height:100vh;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.container{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width:100%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>max-width:820px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background:var(--card);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius:var(--radius);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding:22px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow:0 10px 30px rgba(16,49,58,0.06);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.header{text-align:center;margin-bottom:8px}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.title{font-size:22px;font-weight:700;margin:0}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.subtitle{margin-top:6px;color:var(--muted);font-size:14px}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.question{border-radius:10px;padding:14px;margin:14px 0;background:#fbfeff;border:1px solid rgba(13,76,102,0.03)}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.qtext{font-weight:600;margin-bottom:10px}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.options{display:grid;grid-template-columns:1fr 1fr;gap:10px}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.opt{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding:10px;border-radius:10px;border:1px solid transparent;background:transparent;text-align:left;cursor:pointer;transition:all .16s ease;font-size:14px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.opt:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(13,76,102,0.06)}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.opt input{margin-right:8px}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background:var(--accent);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color:white;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn:disabled{opacity:.5;cursor:not-allowed}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.counters{font-size:13px;color:var(--muted)}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* Result card */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.result{max-width:720px;margin:0 auto;padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.9));box-shadow:0 8px 30px rgba(16,49,58,0.06);text-align:center;animation:fadeIn .45s ease}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.result-emoji{font-size:48px;margin-bottom:8px}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.result-name{font-size:20px;font-weight:700;margin-bottom:6px}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.result-desc{color:#2e646c;margin-bottom:12px}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.share{margin-top:10px;display:flex;gap:8px;justify-content:center}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.small{font-size:13px;color:var(--muted)}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>/* responsive */</p>
-<p class="p1"><span class="Apple-converted-space">    </span>@media (max-width:640px){ .options{grid-template-columns:1fr} .title{font-size:18px} }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;main class="container" id="app" role="main"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="header"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1 class="title"&gt;🌬️ Quale vento ti rappresenta?&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="subtitle"&gt;Rispondi a 10 domande su personalità, empatia e cura. Scopri il tuo vento.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;form id="quizForm" aria-label="Quiz qualificativo"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- Questions will be injected here --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="questions"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="footer"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="counters" id="counter"&gt;Hai risposto a 0 / 10&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;button type="button" id="submitBtn" class="btn" disabled&gt;Scopri il tuo vento&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/form&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="resultArea" style="margin-top:18px"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/main&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>(function(){</p>
-<p class="p1"><span class="Apple-converted-space">      </span>// Winds definitions</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const WINDS = {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>tramontana: { name: 'Tramontana (N)', emoji: '🧭', description: 'Severo e freddo: disciplinato, forte e onesto. Cura gli altri con chiarezza e la distanza giusta; aiuta a vedere meglio e a preservare.', slug: 'tramontana' },</p>
-<p class="p1"><span class="Apple-converted-space">        </span>grecale: <span class="Apple-converted-space">  </span>{ name: 'Grecale (NE)', emoji: '🌩️', description: 'Deciso e a volte imprevedibile: determinato e relativamente intenso. Azione fredda e lucida ma affettuosa; osserva in silenzio e aiuta a prevedere le tempeste.', slug: 'grecale' },</p>
-<p class="p1"><span class="Apple-converted-space">        </span>levante: <span class="Apple-converted-space">  </span>{ name: 'Levante (E)', emoji: '🌅', description: 'Porta la luce del risveglio: calma, paziente e delicata. Cura con perseveranza e semplicità; consola senza mai alzare la voce.', slug: 'levante' },</p>
-<p class="p1"><span class="Apple-converted-space">        </span>scirocco:<span class="Apple-converted-space">  </span>{ name: 'Scirocco (SE)', emoji: '🔥', description: 'Ama il cambiamento: passionale e intensa, a volte opprimente. Non lascia mai solo; dona calore, fisicità e generosità emotiva.', slug: 'scirocco' },</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ostro: <span class="Apple-converted-space">    </span>{ name: 'Ostro (S)', emoji: '🌸', description: 'Caldo e dolce: morbido e paziente. Si prende cura ascoltando, senza giudicare; fa germogliare il bello negli altri.', slug: 'ostro' },</p>
-<p class="p1"><span class="Apple-converted-space">        </span>libeccio:<span class="Apple-converted-space">  </span>{ name: 'Libeccio (SW)', emoji: '⚡', description: 'Tempestoso e vivace: rapido e instabile. Scuote gli altri e li difende con sincerità e protezione; odia la noia e le ingiustizie.', slug: 'libeccio' },</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ponente: <span class="Apple-converted-space">  </span>{ name: 'Ponente (W)', emoji: '🌙', description: 'Mite e moderato: amichevole e confortante. Amico leale e portatore di calma; la sua leggerezza fa bene al cuore.', slug: 'ponente' },</p>
-<p class="p1"><span class="Apple-converted-space">        </span>maestrale: { name: 'Maestrale (NW)', emoji: '🗻', description: 'Potente e orgoglioso: burrascoso e autoritario, ma rialza senza consolare. Dona forza e ricorda la potenza che hanno dentro.', slug: 'maestrale' }</p>
-<p class="p1"><span class="Apple-converted-space">      </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>// Questions array (10 questions)</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const QUESTIONS = [</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{ id:'q1', text:'Quando qualcuno è in difficoltà, come reagisci?', options:[</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'a', text:'Prendo il controllo e sistemo la situazione con ordine.', wind:'tramontana' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'b', text:'Offro supporto caldo e rassicurante, stando vicino.', wind:'ostro' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'c', text:'Mi metto in movimento, a volte con energia forte per proteggere.', wind:'libeccio' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'d', text:'Ascolto in silenzio e aiuto con calma costante.', wind:'levante' }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>]},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{ id:'q2', text:'Ti trovi a dover prendere una decisione difficile: cosa fai?', options:[</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'a', text:'Valuto freddamente e decido con precisione.', wind:'grecale' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'b', text:'Scelgo il cambiamento e seguo la passione.', wind:'scirocco' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'c', text:'Cerco la via di mezzo per non turbare gli altri.', wind:'ponente' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'d', text:'Imposto regole e disciplina per avere chiarezza.', wind:'tramontana' }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>]},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{ id:'q3', text:'Ti piace provare cose nuove e avventure?', options:[</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'a', text:'Sì, cerco il brivido e l’azione rapida.', wind:'libeccio' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'b', text:'Sì, ma con attenzione e calcolo.', wind:'grecale' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'c', text:'Preferisco piccoli cambiamenti dolci.', wind:'ostro' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'d', text:'No: preferisco la routine e l’ordine.', wind:'tramontana' }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>]},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{ id:'q4', text:'Come mostri affetto agli altri?', options:[</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'a', text:'Con gesti calorosi e fisicità.', wind:'scirocco' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'b', text:'Con ascolto paziente e parole dolci.', wind:'ostro' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'c', text:'Con consigli diretti e pratici.', wind:'tramontana' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'d', text:'Con presenza discreta e leggerezza.', wind:'ponente' }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>]},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{ id:'q5', text:'Quando senti che qualcosa non va nel gruppo, tu…', options:[</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'a', text:'Prendo la leadership per sistemare le cose.', wind:'maestrale' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'b', text:'Osservo e avverto prima che peggiori.', wind:'grecale' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'c', text:'Cerco di alleviare le tensioni con dolcezza.', wind:'ostro' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'d', text:'Propongo un cambiamento per scuotere le cose.', wind:'libeccio' }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>]},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{ id:'q6', text:'Quale frase ti descrive meglio?', options:[</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'a', text:'Calma e costante.', wind:'levante' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'b', text:'Forte e autorevole.', wind:'maestrale' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'c', text:'Appassionato e caloroso.', wind:'scirocco' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'d', text:'Sincero e protettivo.', wind:'libeccio' }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>]},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{ id:'q7', text:'Come ti rapporti con chi ha idee molto diverse dalle tue?', options:[</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'a', text:'Cerco dialogo pacato e comprensione.', wind:'ponente' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'b', text:'Spesso imposto i miei limiti con chiarezza.', wind:'tramontana' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'c', text:'Mi adatto e trovo punti in comune.', wind:'ostro' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'d', text:'Sfido le idee per scuotere lo status quo.', wind:'libeccio' }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>]},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{ id:'q8', text:'Credi di poter ferire gli altri col tuo comportamento, anche se involontariamente?', options:[</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'a', text:'Sì, ma cerco sempre di rimediare con sincerità.', wind:'libeccio' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'b', text:'Sì, perché a volte la mia forza può sembrare durezza.', wind:'maestrale' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'c', text:'Forse, ma cerco di imparare e migliorare con calma.', wind:'levante' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'d', text:'No, sto molto attento alle parole e ai gesti.', wind:'ostro' }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>]},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{ id:'q9', text:'Quanto conta per te la disciplina e la chiarezza?', options:[</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'a', text:'Molto: sono regole che salvano il gruppo.', wind:'tramontana' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'b', text:'Abbastanza, ma non a scapito delle persone.', wind:'maestrale' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'c', text:'Poco: preferisco flessibilità e calore.', wind:'ostro' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'d', text:'Dipende: la uso quando serve cambiamento.', wind:'libeccio' }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>]},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>{ id:'q10', text:'In caso di necessità, ti viene spontaneo aiutare gli altri?', options:[</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'a', text:'Sì, è la mia prima reazione: mi muovo subito.', wind:'libeccio' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'b', text:'Sì, ma lo faccio con calma e attenzione.', wind:'ostro' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'c', text:'Solo se so di poter davvero essere utile.', wind:'grecale' },</p>
-<p class="p1"><span class="Apple-converted-space">          </span>{ id:'d', text:'Dipende: a volte preferisco dare forza a distanza.', wind:'tramontana' }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>]}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>const questionsEl = document.getElementById('questions');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const counterEl = document.getElementById('counter');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const submitBtn = document.getElementById('submitBtn');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const resultArea = document.getElementById('resultArea');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>// Build form UI</p>
-<p class="p1"><span class="Apple-converted-space">      </span>QUESTIONS.forEach((q, qi) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const section = document.createElement('section');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>section.className = 'question';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>section.id = q.id;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const qtext = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>qtext.className = 'qtext';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>qtext.textContent = `Domanda ${qi+1}. ${q.text}`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>section.appendChild(qtext);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const opts = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>opts.className = 'options';</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>q.options.forEach(opt =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const label = document.createElement('label');</p>
-<p class="p1"><span class="Apple-converted-space">          </span>label.className = 'opt';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>label.tabIndex = 0;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>label.setAttribute('role','button');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>const input = document.createElement('input');</p>
-<p class="p1"><span class="Apple-converted-space">          </span>input.type = 'radio';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>input.name = q.id;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>input.value = opt.id;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>input.style.marginRight = '8px';</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>// For keyboard accessibility, allow space/enter on label</p>
-<p class="p1"><span class="Apple-converted-space">          </span>label.addEventListener('keydown', (e) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if(e.key === 'Enter' || e.key === ' ') {</p>
-<p class="p1"><span class="Apple-converted-space">              </span>e.preventDefault();</p>
-<p class="p1"><span class="Apple-converted-space">              </span>input.checked = true;</p>
-<p class="p1"><span class="Apple-converted-space">              </span>input.dispatchEvent(new Event('change', { bubbles:true }));</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">          </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>input.addEventListener('change', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// attach selected wind to dataset on the label for visual toggling</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// remove selected class from all options of this question</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const siblings = opts.querySelectorAll('.opt');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>siblings.forEach(s =&gt; s.classList.remove('selected'));</p>
-<p class="p1"><span class="Apple-converted-space">            </span>label.classList.add('selected');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>updateCounter();</p>
-<p class="p1"><span class="Apple-converted-space">          </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">          </span>label.appendChild(input);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const span = document.createElement('span');</p>
-<p class="p1"><span class="Apple-converted-space">          </span>span.textContent = opt.text;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>label.appendChild(span);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>opts.appendChild(label);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>section.appendChild(opts);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>questionsEl.appendChild(section);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>function updateCounter(){</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const total = QUESTIONS.length;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>let answered = 0;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>QUESTIONS.forEach(q =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const val = document.querySelector(`input[name="${q.id}"]:checked`);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if(val) answered++;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>counterEl.textContent = `Hai risposto a ${answered} / ${total}`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>submitBtn.disabled = answered &lt; total;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>// submit logic</p>
-<p class="p1"><span class="Apple-converted-space">      </span>submitBtn.addEventListener('click', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// ensure all answered</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const unanswered = QUESTIONS.filter(q =&gt; !document.querySelector(`input[name="${q.id}"]:checked`));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(unanswered.length &gt; 0){</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if(!confirm(`Hai ${unanswered.length} domande senza risposta. Procedere comunque?`)) return;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// tally</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const tally = { tramontana:0, grecale:0, levante:0, scirocco:0, ostro:0, libeccio:0, ponente:0, maestrale:0 };</p>
-<p class="p1"><span class="Apple-converted-space">        </span>QUESTIONS.forEach(q =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const checked = document.querySelector(`input[name="${q.id}"]:checked`);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if(checked){</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const optId = checked.value;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const opt = q.options.find(o =&gt; o.id === optId);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if(opt &amp;&amp; tally.hasOwnProperty(opt.wind)) tally[opt.wind] += 1;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// pick winner: highest score, tiebreaker deterministic with priority order</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const priority = ['tramontana','grecale','levante','scirocco','ostro','libeccio','ponente','maestrale'];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>let max = -1;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>let winners = [];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>Object.keys(tally).forEach(k =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>if(tally[k] &gt; max){ max = tally[k]; winners = [k]; }</p>
-<p class="p1"><span class="Apple-converted-space">          </span>else if(tally[k] === max) winners.push(k);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>let winnerKey = winners.length === 1 ? winners[0] : (priority.find(p =&gt; winners.includes(p)) || winners[0]);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>showResult(winnerKey, tally);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>function showResult(key, tally){</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const wind = WINDS[key];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>resultArea.innerHTML = '';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const card = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>card.className = 'result';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// emoji</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const emoji = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>emoji.className = 'result-emoji';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>emoji.textContent = wind.emoji;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>card.appendChild(emoji);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// name</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const name = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>name.className = 'result-name';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>name.textContent = wind.name;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>card.appendChild(name);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// description</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const desc = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>desc.className = 'result-desc';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>desc.textContent = wind.description;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>card.appendChild(desc);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// scores grid</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const scoresWrap = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>scoresWrap.style.marginTop = '10px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>scoresWrap.style.display = 'grid';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>scoresWrap.style.gridTemplateColumns = 'repeat(2,1fr)';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>scoresWrap.style.gap = '8px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>Object.keys(tally).forEach(k =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const el = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">          </span>el.style.background = '#fbfeff';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>el.style.padding = '8px';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>el.style.borderRadius = '8px';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>el.style.border = '1px solid rgba(16,49,58,0.03)';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>el.style.display = 'flex';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>el.style.justifyContent = 'space-between';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>el.style.alignItems = 'center';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const left = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">          </span>left.style.fontSize = '13px';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>left.textContent = WINDS[k].name;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const right = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">          </span>right.style.fontWeight = '700';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>right.textContent = tally[k];</p>
-<p class="p1"><span class="Apple-converted-space">          </span>el.appendChild(left);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>el.appendChild(right);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>scoresWrap.appendChild(el);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>card.appendChild(scoresWrap);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// share / restart buttons</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const shareWrap = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>shareWrap.className = 'share';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>shareWrap.style.marginTop = '14px';</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const shareBtn = document.createElement('button');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>shareBtn.className = 'btn';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>shareBtn.textContent = 'Condividi il risultato';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>shareBtn.addEventListener('click', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const url = `https://quizdeiventi.it/?risultato=${wind.slug}`;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>const text = `Il mio vento è il ${wind.name} ${wind.emoji} — ${wind.description} Scopri anche tu quale vento ti rappresenta: ${url}`;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>navigator.clipboard.writeText(text).then(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>alert('Testo copiato negli appunti! Puoi incollarlo dove vuoi.');</p>
-<p class="p1"><span class="Apple-converted-space">          </span>}).catch(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// fallback: show a textarea to manually copy</p>
-<p class="p1"><span class="Apple-converted-space">            </span>showManualCopy(text);</p>
-<p class="p1"><span class="Apple-converted-space">          </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const restartBtn = document.createElement('button');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>restartBtn.className = 'btn';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>restartBtn.style.background = '#4b9ccf';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>restartBtn.textContent = 'Rifai il quiz';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>restartBtn.addEventListener('click', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">          </span>// reset selections</p>
-<p class="p1"><span class="Apple-converted-space">          </span>QUESTIONS.forEach(q =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const checked = document.querySelector(`input[name="${q.id}"]:checked`);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if(checked) checked.checked = false;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>});</p>
-<p class="p1"><span class="Apple-converted-space">          </span>// remove selected classes</p>
-<p class="p1"><span class="Apple-converted-space">          </span>document.querySelectorAll('.opt').forEach(el =&gt; el.classList.remove('selected'));</p>
-<p class="p1"><span class="Apple-converted-space">          </span>resultArea.innerHTML = '';</p>
-<p class="p1"><span class="Apple-converted-space">          </span>document.getElementById('counter').textContent = `Hai risposto a 0 / ${QUESTIONS.length}`;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>document.getElementById('submitBtn').disabled = true;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>// scroll to top</p>
-<p class="p1"><span class="Apple-converted-space">          </span>window.scrollTo({ top: 0, behavior: 'smooth' });</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>shareWrap.appendChild(shareBtn);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>shareWrap.appendChild(restartBtn);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>card.appendChild(shareWrap);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// small link text</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const small = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>small.className = 'small';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>small.style.marginTop = '10px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>small.textContent = `Link condiviso: https://quizdeiventi.it/?risultato=${wind.slug}`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>card.appendChild(small);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>resultArea.appendChild(card);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// scroll to result</p>
-<p class="p1"><span class="Apple-converted-space">        </span>card.scrollIntoView({behavior:'smooth', block:'center'});</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>function showManualCopy(text){</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const modal = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>modal.style.position='fixed';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>modal.style.left='0';modal.style.top='0';modal.style.right='0';modal.style.bottom='0';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>modal.style.background='rgba(0,0,0,0.35)';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>modal.style.display='flex';modal.style.alignItems='center';modal.style.justifyContent='center';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const box = document.createElement('div');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>box.style.background='white';box.style.padding='16px';box.style.borderRadius='10px';box.style.maxWidth='600px';box.style.width='90%';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const ta = document.createElement('textarea');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ta.style.width='100%';ta.style.height='120px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ta.value = text;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>box.appendChild(ta);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const ok = document.createElement('button');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ok.textContent='Chiudi';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ok.className='btn';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ok.style.marginTop='8px';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>ok.addEventListener('click', ()=&gt;document.body.removeChild(modal));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>box.appendChild(ok);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>modal.appendChild(box);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.body.appendChild(modal);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>// initial counter</p>
-<p class="p1"><span class="Apple-converted-space">      </span>updateCounter();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>// accessibility: prevent form submit on Enter</p>
-<p class="p1"><span class="Apple-converted-space">      </span>document.getElementById('quizForm').addEventListener('submit', (e)=&gt;e.preventDefault());</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>})();</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+  <main class="container" id="app" role="main">
+    <header class="header">
+      <h1 class="title">🌬️ Quale vento ti rappresenta?</h1>
+      <p class="subtitle">Rispondi a 10 domande su personalità, empatia e cura. Scopri il tuo vento.</p>
+    </header>
+
+    <form id="quizForm" aria-label="Quiz qualificativo">
+      <!-- Questions will be injected here -->
+      <div id="questions"></div>
+
+      <div class="footer">
+        <div class="counters" id="counter">Hai risposto a 0 / 10</div>
+        <div>
+          <button type="button" id="submitBtn" class="btn" disabled>Scopri il tuo vento</button>
+        </div>
+      </div>
+    </form>
+
+    <div id="resultArea" style="margin-top:18px"></div>
+  </main>
+
+  <script>
+    (function(){
+      // Winds definitions
+      const WINDS = {
+        tramontana: { name: 'Tramontana (N)', emoji: '🧭', description: 'Severo e freddo: disciplinato, forte e onesto. Cura gli altri con chiarezza e la distanza giusta; aiuta a vedere meglio e a preservare.', slug: 'tramontana' },
+        grecale:   { name: 'Grecale (NE)', emoji: '🌩️', description: 'Deciso e a volte imprevedibile: determinato e relativamente intenso. Azione fredda e lucida ma affettuosa; osserva in silenzio e aiuta a prevedere le tempeste.', slug: 'grecale' },
+        levante:   { name: 'Levante (E)', emoji: '🌅', description: 'Porta la luce del risveglio: calma, paziente e delicata. Cura con perseveranza e semplicità; consola senza mai alzare la voce.', slug: 'levante' },
+        scirocco:  { name: 'Scirocco (SE)', emoji: '🔥', description: 'Ama il cambiamento: passionale e intensa, a volte opprimente. Non lascia mai solo; dona calore, fisicità e generosità emotiva.', slug: 'scirocco' },
+        ostro:     { name: 'Ostro (S)', emoji: '🌸', description: 'Caldo e dolce: morbido e paziente. Si prende cura ascoltando, senza giudicare; fa germogliare il bello negli altri.', slug: 'ostro' },
+        libeccio:  { name: 'Libeccio (SW)', emoji: '⚡', description: 'Tempestoso e vivace: rapido e instabile. Scuote gli altri e li difende con sincerità e protezione; odia la noia e le ingiustizie.', slug: 'libeccio' },
+        ponente:   { name: 'Ponente (W)', emoji: '🌙', description: 'Mite e moderato: amichevole e confortante. Amico leale e portatore di calma; la sua leggerezza fa bene al cuore.', slug: 'ponente' },
+        maestrale: { name: 'Maestrale (NW)', emoji: '🗻', description: 'Potente e orgoglioso: burrascoso e autoritario, ma rialza senza consolare. Dona forza e ricorda la potenza che hanno dentro.', slug: 'maestrale' }
+      };
+
+      // Questions array (10 questions)
+      const QUESTIONS = [
+        { id:'q1', text:'Quando qualcuno è in difficoltà, come reagisci?', options:[
+          { id:'a', text:'Prendo il controllo e sistemo la situazione con ordine.', wind:'tramontana' },
+          { id:'b', text:'Offro supporto caldo e rassicurante, stando vicino.', wind:'ostro' },
+          { id:'c', text:'Mi metto in movimento, a volte con energia forte per proteggere.', wind:'libeccio' },
+          { id:'d', text:'Ascolto in silenzio e aiuto con calma costante.', wind:'levante' }
+        ]},
+        { id:'q2', text:'Ti trovi a dover prendere una decisione difficile: cosa fai?', options:[
+          { id:'a', text:'Valuto freddamente e decido con precisione.', wind:'grecale' },
+          { id:'b', text:'Scelgo il cambiamento e seguo la passione.', wind:'scirocco' },
+          { id:'c', text:'Cerco la via di mezzo per non turbare gli altri.', wind:'ponente' },
+          { id:'d', text:'Imposto regole e disciplina per avere chiarezza.', wind:'tramontana' }
+        ]},
+        { id:'q3', text:'Ti piace provare cose nuove e avventure?', options:[
+          { id:'a', text:'Sì, cerco il brivido e l’azione rapida.', wind:'libeccio' },
+          { id:'b', text:'Sì, ma con attenzione e calcolo.', wind:'grecale' },
+          { id:'c', text:'Preferisco piccoli cambiamenti dolci.', wind:'ostro' },
+          { id:'d', text:'No: preferisco la routine e l’ordine.', wind:'tramontana' }
+        ]},
+        { id:'q4', text:'Come mostri affetto agli altri?', options:[
+          { id:'a', text:'Con gesti calorosi e fisicità.', wind:'scirocco' },
+          { id:'b', text:'Con ascolto paziente e parole dolci.', wind:'ostro' },
+          { id:'c', text:'Con consigli diretti e pratici.', wind:'tramontana' },
+          { id:'d', text:'Con presenza discreta e leggerezza.', wind:'ponente' }
+        ]},
+        { id:'q5', text:'Quando senti che qualcosa non va nel gruppo, tu…', options:[
+          { id:'a', text:'Prendo la leadership per sistemare le cose.', wind:'maestrale' },
+          { id:'b', text:'Osservo e avverto prima che peggiori.', wind:'grecale' },
+          { id:'c', text:'Cerco di alleviare le tensioni con dolcezza.', wind:'ostro' },
+          { id:'d', text:'Propongo un cambiamento per scuotere le cose.', wind:'libeccio' }
+        ]},
+        { id:'q6', text:'Quale frase ti descrive meglio?', options:[
+          { id:'a', text:'Calma e costante.', wind:'levante' },
+          { id:'b', text:'Forte e autorevole.', wind:'maestrale' },
+          { id:'c', text:'Appassionato e caloroso.', wind:'scirocco' },
+          { id:'d', text:'Sincero e protettivo.', wind:'libeccio' }
+        ]},
+        { id:'q7', text:'Come ti rapporti con chi ha idee molto diverse dalle tue?', options:[
+          { id:'a', text:'Cerco dialogo pacato e comprensione.', wind:'ponente' },
+          { id:'b', text:'Spesso imposto i miei limiti con chiarezza.', wind:'tramontana' },
+          { id:'c', text:'Mi adatto e trovo punti in comune.', wind:'ostro' },
+          { id:'d', text:'Sfido le idee per scuotere lo status quo.', wind:'libeccio' }
+        ]},
+        { id:'q8', text:'Credi di poter ferire gli altri col tuo comportamento, anche se involontariamente?', options:[
+          { id:'a', text:'Sì, ma cerco sempre di rimediare con sincerità.', wind:'libeccio' },
+          { id:'b', text:'Sì, perché a volte la mia forza può sembrare durezza.', wind:'maestrale' },
+          { id:'c', text:'Forse, ma cerco di imparare e migliorare con calma.', wind:'levante' },
+          { id:'d', text:'No, sto molto attento alle parole e ai gesti.', wind:'ostro' }
+        ]},
+        { id:'q9', text:'Quanto conta per te la disciplina e la chiarezza?', options:[
+          { id:'a', text:'Molto: sono regole che salvano il gruppo.', wind:'tramontana' },
+          { id:'b', text:'Abbastanza, ma non a scapito delle persone.', wind:'maestrale' },
+          { id:'c', text:'Poco: preferisco flessibilità e calore.', wind:'ostro' },
+          { id:'d', text:'Dipende: la uso quando serve cambiamento.', wind:'libeccio' }
+        ]},
+        { id:'q10', text:'In caso di necessità, ti viene spontaneo aiutare gli altri?', options:[
+          { id:'a', text:'Sì, è la mia prima reazione: mi muovo subito.', wind:'libeccio' },
+          { id:'b', text:'Sì, ma lo faccio con calma e attenzione.', wind:'ostro' },
+          { id:'c', text:'Solo se so di poter davvero essere utile.', wind:'grecale' },
+          { id:'d', text:'Dipende: a volte preferisco dare forza a distanza.', wind:'tramontana' }
+        ]}
+      ];
+
+      const questionsEl = document.getElementById('questions');
+      const counterEl = document.getElementById('counter');
+      const submitBtn = document.getElementById('submitBtn');
+      const resultArea = document.getElementById('resultArea');
+
+      // Build form UI
+      QUESTIONS.forEach((q, qi) => {
+        const section = document.createElement('section');
+        section.className = 'question';
+        section.id = q.id;
+
+        const qtext = document.createElement('div');
+        qtext.className = 'qtext';
+        qtext.textContent = `Domanda ${qi+1}. ${q.text}`;
+        section.appendChild(qtext);
+
+        const opts = document.createElement('div');
+        opts.className = 'options';
+
+        q.options.forEach(opt => {
+          const label = document.createElement('label');
+          label.className = 'opt';
+          label.tabIndex = 0;
+          label.setAttribute('role','button');
+
+          const input = document.createElement('input');
+          input.type = 'radio';
+          input.name = q.id;
+          input.value = opt.id;
+          input.style.marginRight = '8px';
+
+          // For keyboard accessibility, allow space/enter on label
+          label.addEventListener('keydown', (e) => {
+            if(e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              input.checked = true;
+              input.dispatchEvent(new Event('change', { bubbles:true }));
+            }
+          });
+
+          input.addEventListener('change', () => {
+            // attach selected wind to dataset on the label for visual toggling
+            // remove selected class from all options of this question
+            const siblings = opts.querySelectorAll('.opt');
+            siblings.forEach(s => s.classList.remove('selected'));
+            label.classList.add('selected');
+            updateCounter();
+          });
+
+          label.appendChild(input);
+          const span = document.createElement('span');
+          span.textContent = opt.text;
+          label.appendChild(span);
+          opts.appendChild(label);
+        });
+
+        section.appendChild(opts);
+        questionsEl.appendChild(section);
+      });
+
+      function updateCounter(){
+        const total = QUESTIONS.length;
+        let answered = 0;
+        QUESTIONS.forEach(q => {
+          const val = document.querySelector(`input[name="${q.id}"]:checked`);
+          if(val) answered++;
+        });
+        counterEl.textContent = `Hai risposto a ${answered} / ${total}`;
+        submitBtn.disabled = answered < total;
+      }
+
+      // submit logic
+      submitBtn.addEventListener('click', () => {
+        // ensure all answered
+        const unanswered = QUESTIONS.filter(q => !document.querySelector(`input[name="${q.id}"]:checked`));
+        if(unanswered.length > 0){
+          if(!confirm(`Hai ${unanswered.length} domande senza risposta. Procedere comunque?`)) return;
+        }
+        // tally
+        const tally = { tramontana:0, grecale:0, levante:0, scirocco:0, ostro:0, libeccio:0, ponente:0, maestrale:0 };
+        QUESTIONS.forEach(q => {
+          const checked = document.querySelector(`input[name="${q.id}"]:checked`);
+          if(checked){
+            const optId = checked.value;
+            const opt = q.options.find(o => o.id === optId);
+            if(opt && tally.hasOwnProperty(opt.wind)) tally[opt.wind] += 1;
+          }
+        });
+        // pick winner: highest score, tiebreaker deterministic with priority order
+        const priority = ['tramontana','grecale','levante','scirocco','ostro','libeccio','ponente','maestrale'];
+        let max = -1;
+        let winners = [];
+        Object.keys(tally).forEach(k => {
+          if(tally[k] > max){ max = tally[k]; winners = [k]; }
+          else if(tally[k] === max) winners.push(k);
+        });
+        let winnerKey = winners.length === 1 ? winners[0] : (priority.find(p => winners.includes(p)) || winners[0]);
+        showResult(winnerKey, tally);
+      });
+
+      function showResult(key, tally){
+        const wind = WINDS[key];
+        resultArea.innerHTML = '';
+        const card = document.createElement('div');
+        card.className = 'result';
+        // emoji
+        const emoji = document.createElement('div');
+        emoji.className = 'result-emoji';
+        emoji.textContent = wind.emoji;
+        card.appendChild(emoji);
+        // name
+        const name = document.createElement('div');
+        name.className = 'result-name';
+        name.textContent = wind.name;
+        card.appendChild(name);
+        // description
+        const desc = document.createElement('div');
+        desc.className = 'result-desc';
+        desc.textContent = wind.description;
+        card.appendChild(desc);
+        // scores grid
+        const scoresWrap = document.createElement('div');
+        scoresWrap.style.marginTop = '10px';
+        scoresWrap.style.display = 'grid';
+        scoresWrap.style.gridTemplateColumns = 'repeat(2,1fr)';
+        scoresWrap.style.gap = '8px';
+        Object.keys(tally).forEach(k => {
+          const el = document.createElement('div');
+          el.style.background = '#fbfeff';
+          el.style.padding = '8px';
+          el.style.borderRadius = '8px';
+          el.style.border = '1px solid rgba(16,49,58,0.03)';
+          el.style.display = 'flex';
+          el.style.justifyContent = 'space-between';
+          el.style.alignItems = 'center';
+          const left = document.createElement('div');
+          left.style.fontSize = '13px';
+          left.textContent = WINDS[k].name;
+          const right = document.createElement('div');
+          right.style.fontWeight = '700';
+          right.textContent = tally[k];
+          el.appendChild(left);
+          el.appendChild(right);
+          scoresWrap.appendChild(el);
+        });
+        card.appendChild(scoresWrap);
+
+        // share / restart buttons
+        const shareWrap = document.createElement('div');
+        shareWrap.className = 'share';
+        shareWrap.style.marginTop = '14px';
+
+        const shareBtn = document.createElement('button');
+        shareBtn.className = 'btn';
+        shareBtn.textContent = 'Condividi il risultato';
+        shareBtn.addEventListener('click', () => {
+          const url = `https://quizdeiventi.it/?risultato=${wind.slug}`;
+          const text = `Il mio vento è il ${wind.name} ${wind.emoji} — ${wind.description} Scopri anche tu quale vento ti rappresenta: ${url}`;
+          navigator.clipboard.writeText(text).then(() => {
+            alert('Testo copiato negli appunti! Puoi incollarlo dove vuoi.');
+          }).catch(() => {
+            // fallback: show a textarea to manually copy
+            showManualCopy(text);
+          });
+        });
+
+        const restartBtn = document.createElement('button');
+        restartBtn.className = 'btn';
+        restartBtn.style.background = '#4b9ccf';
+        restartBtn.textContent = 'Rifai il quiz';
+        restartBtn.addEventListener('click', () => {
+          // reset selections
+          QUESTIONS.forEach(q => {
+            const checked = document.querySelector(`input[name="${q.id}"]:checked`);
+            if(checked) checked.checked = false;
+          });
+          // remove selected classes
+          document.querySelectorAll('.opt').forEach(el => el.classList.remove('selected'));
+          resultArea.innerHTML = '';
+          document.getElementById('counter').textContent = `Hai risposto a 0 / ${QUESTIONS.length}`;
+          document.getElementById('submitBtn').disabled = true;
+          // scroll to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        shareWrap.appendChild(shareBtn);
+        shareWrap.appendChild(restartBtn);
+        card.appendChild(shareWrap);
+
+        // small link text
+        const small = document.createElement('div');
+        small.className = 'small';
+        small.style.marginTop = '10px';
+        small.textContent = `Link condiviso: https://quizdeiventi.it/?risultato=${wind.slug}`;
+        card.appendChild(small);
+
+        resultArea.appendChild(card);
+        // scroll to result
+        card.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+
+      function showManualCopy(text){
+        const modal = document.createElement('div');
+        modal.style.position='fixed';
+        modal.style.left='0';modal.style.top='0';modal.style.right='0';modal.style.bottom='0';
+        modal.style.background='rgba(0,0,0,0.35)';
+        modal.style.display='flex';modal.style.alignItems='center';modal.style.justifyContent='center';
+        const box = document.createElement('div');
+        box.style.background='white';box.style.padding='16px';box.style.borderRadius='10px';box.style.maxWidth='600px';box.style.width='90%';
+        const ta = document.createElement('textarea');
+        ta.style.width='100%';ta.style.height='120px';
+        ta.value = text;
+        box.appendChild(ta);
+        const ok = document.createElement('button');
+        ok.textContent='Chiudi';
+        ok.className='btn';
+        ok.style.marginTop='8px';
+        ok.addEventListener('click', ()=>document.body.removeChild(modal));
+        box.appendChild(ok);
+        modal.appendChild(box);
+        document.body.appendChild(modal);
+      }
+
+      // initial counter
+      updateCounter();
+
+      // accessibility: prevent form submit on Enter
+      document.getElementById('quizForm').addEventListener('submit', (e)=>e.preventDefault());
+
+    })();
+  </script>
 </body>
 </html>
